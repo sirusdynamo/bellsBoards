@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,11 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Boards</title>   
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 </head>
-<body>
-    <h1>Boards</h1>
-    {% for board in boards %}
-    {{ boards.name }}
-    {% endfor %}
-</body>
+  <body>
+    <div class="container">
+      <ol class="breadcrumb my-4">
+        <li class="breadcrumb-item active">Boards</li>
+      </ol>
+      <table class="table">
+        <thead class="thead">
+          <tr>
+            <th>Board</th>
+            <th>Posts</th>
+            <th>Topics</th>
+            <th>Last Post</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for board in boards %}
+            <tr>
+              <td>
+                {{ board.name }}
+                <small class="text-muted d-block">{{ board.description }}</small>
+              </td>
+              <td class="align-middle">0</td>
+              <td class="align-middle">0</td>
+              <td></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </body>
 </html>
