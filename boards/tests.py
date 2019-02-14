@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.urls import reverse, resolve
 from .views import home , board_topics ,new_topics
 from .models import Board
+from .forms import NewTopicForm
 # Create your tests here.
 
 
@@ -88,11 +89,30 @@ class NewTopicTests(TestCase):
         view = resolve('/boards/1/new/')
         self.assertEqual(view.func, new_topics)
 
-    def test_new(self):
-        new_topics_url = reverse('new_topics', kwargs={'board_id':1})
-        board_topics_url = reverse('board_topics', kwargs={'board_id':1})
-        response= self.client.get(new_topics_url)
-        self.assertContains(response, "href='{0}'".format(board_topics_url))
+    # def test_new(self):
+    #     new_topics_url = reverse('new_topics', kwargs={'board_id':1})
+    #     board_topics_url = reverse('board_topics', kwargs={'board_id':1})
+    #     response= self.client.get(new_topics_url)
+    #     self.assertContains(response, "href='{0}'".format(board_topics_url))
+
+
+    def test_contains_form(self):
+        url = reverse('new_topics', kwargs={'board_id': 1})
+        response = self.client.get(url)
+        form = response.context.get('form')
+        self.assertIsInstance(form ,NewTopicForm)
+
+    def test_new_topic_invalid_post(self):
+        url = reverse('new_topics', kwargs={'board_id':1})
+        response = self.client.post(url, {})
+        form = response.context.get('form')
+
+        self.assertEquals(response.status_code, 200)
+        self.assertTrue(form.errors)
+
+    def test_new_topic_valid_form(self):
+        form = NewTopicForm({'subject': 'debugging', 'message':r'this the result of the tests'})
+        self.assertTrue(form.is_valid())
         
 
 
