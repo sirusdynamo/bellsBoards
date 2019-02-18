@@ -2,7 +2,9 @@ from django.test import TestCase
 from django.urls import reverse, resolve
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .views import signup
+
+from ..views import signup
+from ..forms import SignUpForm
 # Create your tests here.
 
 
@@ -25,16 +27,25 @@ class SignUpTest(TestCase):
 
     def test_contains_form(self):
         form = self.response.context.get('form')
-        self.assertIsInstance(form, UserCreationForm)
+        self.assertIsInstance(form, SignUpForm)
+        
+    def test_form_inputs(self):
+        self.assertContains(self.response,'<input',5)
+        self.assertContains(self.response,'type="text"',1)
+        self.assertContains(self.response,'type="email"',1)
+        self.assertContains(self.response,'type="password"',2)
+        
 
 
 class SucessfulSignUpTest(TestCase):
+
     def setUp(self):
         url = reverse('signup')
         data= {
             'username':'sarah',
+            'email':'abc@xyz.com',
             'password1':'abcde1234',
-            'password2':'abcde1234'
+            'password2':'abcde1234',
                     }
         self.response = self.client.post(url, data)
         self.home_url = reverse('home')

@@ -1,0 +1,39 @@
+
+{% load static %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/dropdown.css' %}">
+{% endblock stylesheet %}
+
+<div class=" ml-auto"  id="mainMenu">
+  <div class="button">
+    <p>Dropdown</p>
+    <img src="https://svgshare.com/i/8u6.svg" alt="" class="arrow">
+   
+  </div>
+  <div class="dropdown">
+    <a href="#" id="adobeXd">Adobe XD
+      <span></span>
+    </a>
+    <a href="#" id="sketch">Sketch
+      <span></span>
+    </a>
+    <a href="#" id="figma">Figma
+      <span></span>
+    </a>
+    <a href="#" id="inVision">InVision
+      <span></span>
+    </a>
+  </div>
+</div>
+{% block custom_script %}
+  <script src=" {% static 'js/dropdown.js' %}"> </script>
+{% endblock custom_script %}
+
+
+<!-- <div class="collapse navbar-collapse" id="mainMenu">
+  <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+      <a class="nav-link" href="#">{{ user.username }}</a>
+    </li>
+  </ul>
+</div> -->
